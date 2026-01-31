@@ -1,0 +1,31 @@
+Amg-Trp network
+
+  Query (regions with positive regression coefficients): amygdala, inferior temporal gyrus, temporal pole, inferior lateral occipital cortex, superior temporal gyrus, fusiform cortex, supplementary motor area
+  Results (with similarity weights, descending order): motor (0.15), object (0.06), visual (0.05), action (0.05), semantic (0.04), face (0.04), empathy (0.04), social (0.02), FFA [fusiform face area] (0.01), word (0.01), auditory (0.01), somatosensory (0.01), motion (0.01)
+
+  Query (regions with negative regression coefficients): amygdala, superior lateral occipital cortex, angular gyrus, precuneus, supramarginal gyrus, frontal pole
+  Results (with similarity weights, descending order): object (0.07), visual (0.06), arithmetic (0.04), speech (0.03), phonological (0.02), default mode (0.02), language (0.02), face (0.02), default (0.02), meta (0.02), DMN (0.02), reward (0.01), motor (0.01), auditory (0.01), somatosensory (0.01), motion (0.01)
+
+Amg-Kyn network
+
+  Query (regions with positive regression coefficients): amygdala, fusiform cortex, posterior superior temporal gyrus, hippocampus, intracalcarine cortex, occipital pole, inferior lower occipital cortex, posterior middle temporal gyrus, lingual gyrus
+  Results (with similarity weights, descending order): semantic (0.10), face (0.09), visual (0.07), self (0.06), scene (0.04), word (0.03), object (0.02), motion (0.02), auditory (0.02), FFA [fusiform face area] (0.02), sound (0.02), visual cortex (0.02), speech (0.01), motor (<0.01)
+
+  Query (regions with negative regression coefficients): amygdala, paracingulate gyrus, anterior cingulate cortex, middle frontal gyrus, caudate, medial frontal cortex, accumbens, thalamus, angular gyrus, frontal pole, parahippocampal cortex
+  Results (with similarity weights, descending order): Reward (0.13), MDD [major depressive disorder] (0.05), cognitive control (0.04), scene (0.03), memory (0.03), spatial (0.03), object (0.03), major depressive disorder (0.03), arithmetic (0.03), pain (0.02), default (0.01), visual (0.01), auditory (0.01), motor (0.01), somatosensory (<0.01)
+
+ACC-Trp network
+
+  Query (regions with positive regression coefficients): ACC, anterior cingulate cortex, Heschl’s gyrus, parahippocampal cortex, hippocampus, inferior temporal gyrus, temporal fusiform cortex, frontal pole, amygdala, operculum, temporal pole
+  Results (with similarity weights, descending order): auditory (0.07), music (0.06), social (0.04), object (0.04), scene (0.04), spatial (0.04), musical (0.03), memory (0.03), somatosensory (0.03), pitch (0.02), speech (0.02), auditory cortex (0.02), visual (0.02), pain (0.01), face (0.01), motor (0.01)
+
+  Query (regions with negative regression coefficients): ACC, anterior cingulate cortex, precentral gyrus, lower occipital cortex, postcentral gyrus, superior frontal gyrus, superior parietal lobule, posterior supramarginal gyrus, middle frontal gyrus, occipital fusiform cortex, precuneus, supplementary motor area
+  Results (with similarity weights, descending order): visual (0.07), motor (0.07), self (0.06), face (0.02), speech (0.02), somatosensory (0.02), movement (0.02), DMN [default mode network] (0.01), hand (0.01), FA (0.01), auditory (0.01)
+  
+ACC-Kyn/Trp ratio network
+
+  Query (regions with positive regression coefficients): ACC, anterior cingulate cortex, precentral gyrus, postcentral gyrus, middle frontal gyrus, subcallosal cortex, superior lower occipital cortex, cuneus, lingual gyrus, intracalcarine cortex, paracingulate cortex, superior parietal lobule
+  Results (with similarity weights, descending order): action (0.05), visual (0.03), empathy (0.03), cross-modal (0.02), motor (0.02), face (0.02), somatosensory (0.01), task (0.01), visual cortex (0.01), motion (0.01), hand (0.01), auditory (<0.01)
+
+  Query (regions with negative regression coefficients): ACC, anterior cingulate cortex, Heschl’s gyrus, frontoorbital cortex, insula, amygdala, operculum, temporal pole, anterior parahippocampal cortex, temporal fusiform cortex, planum polare, hippocampus
+  Results (with similarity weights, descending order): auditory (0.11), music (0.9), imitation (0.05), depression (0.05), musical (0.05), pitch (0.04), scene (0.03), spatial (0.03), object (0.03), memory (0.03), sound (0.03), somatosensory (0.03), response inhibition (0.03), auditory cortex (0.02), speech (0.01), pain (0.01), visual (0.01), face (0.01), motor (0.01)
