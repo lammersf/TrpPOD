@@ -1,0 +1,82 @@
+library(mdatools)					                # load package for pls()
+
+x.set=trp.pls.dat[,2:105]				          # independent variables (IV; functional connectivity of a seed region)
+
+y.set=as.matrix(trp.pls.dat$T1_TRP)		    # dependent variables (DV, e.g., Trp 
+# concentration)
+
+n.sample=276						                  # sample size (here, N=276 patients
+# provided both preoperative Trp 
+# levels and preoperative fMRI data)
+
+start.seed=15						                  # set random set for reproducibility
+
+k.o=30							                      # number of outer iterations for nested cross validation
+
+corr.r.trp= rep(NA, times=k.o)		        # an empty vector to save Spearman’s rho for correlation between predicted and actual metabolite (e.g., Trp) concentration for each outer iteration
+
+
+n.opt.comp.trp= rep(NA, times=k.o)        # an empty vector to save the optimal number of components determined by leave-one-out cross-validation in each training dataset
+
+reg.coeff.trp= matrix(, nrow=104, ncol=k.o)	    # an empty matrix to save the  regression coefficients from each outer iteration of the nested cross validation. Number of rows in the 
+                                                # matrix is determined by number of functional connections of the seed ROI (one column for each outer iteration)
+
+reg.rmse.trp= matrix(, nrow=0, ncol=3)		      # a matrix saving observed values (val)
+colnames(reg.rmse.kyn)=c("i",			              # in the validation set, predicted values
+     "val",			                                # (pred.val) for each iteration (i) to
+     "pred.val")		                            # calculate the RMSE (root mean squared error)
+
+for(i in 1:k.o){					                      # initiates loop for out cross-validation
+
+		   set.seed(start.seed+i*3)
+		   cv.split=sample(c(TRUE, FALSE), size=n.sample, replace=TRUE,
+   prob=c(0.5,0.5))
+
+		   x.t=      subset(x.set, cv.split==TRUE)	# training IVs
+		   x.v=      subset(x.set, cv.split==FALSE)	# validation IVs
+		   mtb.t=    subset(y.set, cv.split==TRUE)	# training DV
+		   mtb.v=    subset(y.set, cv.split==FALSE)	# validation DV
+
+   # above: in each outer validation step, the dataset is split into a training and a validation dataset, each containing 50% of cases x.set is a matrix containing preoperative functional connectivity data
+   # (one connection per column, one subject per row). y.set is a vector of preoperative metabolite data (Trp, Kyn or Kyn, one subject per row, one value per column)
+				
+		   pls.t=pls(x=x.t, y=mtb.t, cv=1)              # calculates a partial least squares regression model in the training dataset. Full leave-one-out cross-validation is performed to determine 
+                                                    # the optimal number of components
+				
+		   opt.comp=pls.t$ncomp.selected	
+		   pls.opt=pls(x.t, y=mtb.t, ncomp=opt.comp)           # updates PLS model with the optimal number of components
+				
+		   score=predict(pls.opt, x=x.v)$y.pred[,opt.comp,]    # predict metabolite concentrations in the validation dataset from the model calculated in the training dataset 
+
+   corr.m=cor(mtb.v, score, method="spearman")            # calculates spearman’s rho (corr.m) for predicted and 
+   plot(mtb.v, score)                                     # actual values and prints a nice plot
+				      
+		   corr.r.trp[i]=corr.m                                   # save Spearman’s rho, optimal number of components and
+		   n.opt.comp.trp[i]=opt.comp                             # regression coefficient from each outer iteration
+		   reg.coeff.trp[,i]=pls.opt$coeffs$values[,opt.comp,1]  
+	
+
+		   reg.rmse.trp=rbind(reg.rmse.trp, cbind(i, mtb.v, score)    # above: saves number of iteration, observed value and predicted value to
+		                                                              # calculate the RMSE
+
+}						                                                      # end loop for cross validation
+
+
+
+pls.full=pls(x=x.set, y=y.set, cv=1)			# running partial least squares regression for the full dataset
+
+
+nw.pre=predict(object=pls.full, x=x.set)$y.pred[,1,1]          # predict.pls() is used to predict metabolite-related network activity before
+nw.post=predict(object=pls.full, x=x.set.post)$y.pred[,1,1]    # surgery (nw.pre) and after surgery (nw.post) from matrices of preoperative function
+                                                               # connectivity data (x.set) and postoperative functional connectivity data (x.set.post)
+
+reg.rmse.trp=as.data.frame(reg.rmse.trp)
+rmse.trp=data.frame(
+"rmse"=	sqrt(aggregate(x=(amg.reg.rmse.trp$pred.val-amg.reg.rmse.trp$val)^2, by=list(as.factor(reg.rmse.trp$i)), FUN=mean)[,2]),
+"min"=		aggregate(x=reg.rmse.trp$val, by=list(as.factor(reg.rmse.trp$i)), FUN=min)[,2],
+"max"=		aggregate(x=amg.reg.rmse.kyn$val, by=list(as.factor(amg.reg.rmse.kyn$i)), FUN=max)[,2])
+
+rmse.trp$nrmse=rmse.trp$rmse/(rmse.trp$max-rmse.trp$min)
+
+# above: calculation of RMSE (rmse) and identification of minimum and maximum observed
+# values in each validation set (min, max) for normalization to nrmse
